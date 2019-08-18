@@ -1,22 +1,24 @@
+package parse
 
+import format.{FileNameNumberFormatter, Formatter}
 
-trait FileNameParser {
-  def parse(filename: String, template: Array[String] => String): String
-  def parse(filename: String): String
-}
 
 object HentaiNameParser extends FileNameParser {
   val bracketRegEx = "[\\[,(,{].*?[\\],),}]".r
   val symbolsToRemove = Seq("_", "-", "~", "")
 
 
-  override def parse(filename: String, template: Array[String] => String): String = {
+  override def parse(filename: String, format: Formatter): String = {
     val nameWithoutBrackets = bracketFinder(filename)
     val title = nameWithoutBrackets.split("[  _|-]").filter(t => !symbolsToRemove.contains(t))
-    template.apply(title)
+    formatTitle(title, format)
   }
 
-  def bracketFinder(title: String): String = {
+  private[this] def formatTitle(title: Array[String], format: Formatter): String = {
+    format.arrayToString(title)
+  }
+
+  private[this] def bracketFinder(title: String): String = {
     var tempName = title
     val removed = bracketRegEx.findAllIn(title).toList
     for (el <- removed)
@@ -27,7 +29,7 @@ object HentaiNameParser extends FileNameParser {
   override def parse(filename: String): String = {
     val nameWithoutBrackets = bracketFinder(filename)
     val title = nameWithoutBrackets.split("[  _|-]").filter(t => !symbolsToRemove.contains(t))
-    title.mkString(" ")
+    formatTitle(title, FileNameNumberFormatter)
   }
 }
 
