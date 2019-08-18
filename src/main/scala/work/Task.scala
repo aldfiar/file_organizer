@@ -1,5 +1,7 @@
 package work
 
+import java.nio.file.Path
+
 trait Task {
-  def execute()
+  def execute(path: Path)
 }
