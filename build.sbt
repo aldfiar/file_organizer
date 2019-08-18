@@ -1,4 +1,4 @@
-name := "project_organizer"
+name := "file_organizer"
 
 version := "0.1"
 
