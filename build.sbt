@@ -12,7 +12,7 @@ val scalaTestVersion = "3.0.8"
 val filesVersion = "3.8.0"
 
 libraryDependencies ++= Seq(
-  "com.github.pathikrit" %% "better-files-akka" % filesVersion,
+  "com.github.pathikrit" %% "better-files" % filesVersion,
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test",
 )
 
