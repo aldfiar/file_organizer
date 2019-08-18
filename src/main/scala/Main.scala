@@ -1,5 +1,5 @@
 import better.files.File
-import parse.HentaiNameParser
+import parse.VideoFileNameParser
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -10,7 +10,7 @@ object Main {
       .map(t => t.toFile)
       .map(t => t.toString)
       .map(f => f.split("\\.").apply(0))
-    val names = filenames.map(t => HentaiNameParser.parse(t))
+    val names = filenames.map(t => VideoFileNameParser.parse(t))
     names.foreach(t => println(t))
   }
 }
