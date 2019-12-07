@@ -1,5 +1,9 @@
 package work
 
+import java.nio.file.Path
+
 trait Worker {
-  def work(): Runnable
+  val task: Task
+
+  def work(path: Path): Runnable
 }
