@@ -22,11 +22,9 @@ class RenameTaskTest extends FunSuite with BeforeAndAfterEach {
   }
 
   test("Renamed file exists") {
-    val number = path.toFile.getName.split(" ").takeRight(1).apply(0)
     val renamedPath = task.execute(path)
-
     val renamedExisted = task.execute(renamedPath)
-    assume(renamedPath != renamedExisted, "Existed: %s, renamed: %s".format(renamedPath, renamedExisted))
+    assertResult(renamedPath)(renamedExisted)
   }
 
   override def afterEach() {
