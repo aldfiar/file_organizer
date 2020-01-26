@@ -3,6 +3,7 @@ package tasks
 import java.nio.file.{Files, Path}
 
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
+import workers.tasks.files.DuplicateRenameTask
 
 class DuplicatedTaskTest extends FunSuite with BeforeAndAfterEach {
   private val task: DuplicateRenameTask = new DuplicateRenameTask()
@@ -16,7 +17,7 @@ class DuplicatedTaskTest extends FunSuite with BeforeAndAfterEach {
     val number = path.toFile.getName.split(" ").takeRight(1).apply(0)
     val renamedPath = task.execute(path)
 
-    val renamedExisted = task.execute(renamedPath)
+    val renamedExisted = task.execute(renamedPath.get)
     assume(renamedPath != renamedExisted, "Existed: %s, renamed: %s".format(renamedPath, renamedExisted))
   }
 

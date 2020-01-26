@@ -1,5 +1,0 @@
-package file
-
-class FileWorker() {
-
-}

@@ -1,4 +1,4 @@
-package tasks
+package workers.tasks.files
 
 import java.nio.file.Path
 import java.util.concurrent.ThreadLocalRandom
@@ -7,7 +7,7 @@ import com.typesafe.scalalogging.StrictLogging
 
 class DuplicateRenameTask extends FileTask with StrictLogging {
 
-  override def execute(path: Path): Path = {
+  override def execute(path: Path): Option[Path] = {
     val (fileName, fileExtension) = this.getFileNameAndExtension(path)
 
     val randomNumber = ThreadLocalRandom.current().nextInt(100)

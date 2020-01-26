@@ -1,24 +1,24 @@
-package tasks
+package workers.tasks.files
 
 import java.io.IOException
 import java.nio.file.{Files, Path}
 
 import com.typesafe.scalalogging.StrictLogging
-import work.Task
+import workers.WorkerTask
 
-abstract class FileTask extends Task with StrictLogging {
+abstract class FileTask extends WorkerTask[Path] with StrictLogging {
 
-  protected def moveFile(oldPath: Path, newPath: Path): Path = {
+  protected def moveFile(oldPath: Path, newPath: Path): Option[Path] = {
     try {
       Files.move(oldPath, newPath)
-      newPath
+      Option.apply(newPath)
     } catch {
       case x: IOException =>
         logger.error(s"Cant't move file $oldPath to $newPath error $x")
-        oldPath
+        None
       case _ =>
         logger.error(s"Cant't move file $oldPath to $newPath with unknown problem")
-        oldPath
+        None
     }
   }
 

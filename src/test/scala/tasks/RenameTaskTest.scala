@@ -2,11 +2,12 @@ package tasks
 
 import java.nio.file.{Files, Path}
 
+import files.name.converters.VideoNameConverter
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
-import parse.VideoFileNameParser
+import workers.tasks.files.RenameTask
 
 class RenameTaskTest extends FunSuite with BeforeAndAfterEach {
-  private val task: RenameTask = new RenameTask(VideoFileNameParser)
+  private val task: RenameTask = new RenameTask(VideoNameConverter)
   private var path: Path = _
 
   override def beforeEach() {
@@ -16,14 +17,14 @@ class RenameTaskTest extends FunSuite with BeforeAndAfterEach {
   test("Simple rename") {
     val number = path.toFile.getName.split(" ").takeRight(1).apply(0)
     val renamedPath = task.execute(path)
-    val renamed = renamedPath.toFile.getName
+    val renamed = renamedPath.get.toFile.getName
     val expected = s"Bishoujo Java Tsumi to batsu no shoujo - $number"
     assertResult(expected)(renamed)
   }
 
   test("Renamed file exists") {
     val renamedPath = task.execute(path)
-    val renamedExisted = task.execute(renamedPath)
+    val renamedExisted = task.execute(renamedPath.get)
     assertResult(renamedPath)(renamedExisted)
   }
 

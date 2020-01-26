@@ -1,4 +1,4 @@
-package format
+package files.name.format
 
 object FileNameNumberFormatter extends Formatter {
   override def arrayToString(value: Array[String]): String = {

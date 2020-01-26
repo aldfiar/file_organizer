@@ -1,4 +1,4 @@
-package parse
+package files.name.parse
 
 object StringProcessor {
   def process(original: String, transformFunction: String => Array[String], preFunction: Array[String] => Array[String], postFunction: Array[String] => String): String = {

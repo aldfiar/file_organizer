@@ -1,13 +1,13 @@
-package parse
+package files.name.converters
 
-import format.{FileNameNumberFormatter, Formatter}
+import files.name.format.{FileNameNumberFormatter, Formatter}
+import files.name.parse.StringProcessor
 
-
-object VideoFileNameParser extends FileNameParser {
+object VideoNameConverter extends FileNameConverter {
   private val bracketRegEx = "[\\[({].*?[\\])}]".r
   private val symbolsToRemove = Seq("_", "-", "~", "")
 
-  override def parse(filename: String, format: Formatter): String = {
+  override def convert(filename: String, format: Formatter): String = {
     StringProcessor.process(filename, splitFunction, format.arrayToString)
   }
 
@@ -15,8 +15,7 @@ object VideoFileNameParser extends FileNameParser {
     bracketRegEx.replaceAllIn(filename, "").split("[ _|-]").filter(t => !symbolsToRemove.contains(t))
   }
 
-  override def parse(filename: String): String = {
+  override def convert(filename: String): String = {
     StringProcessor.process(filename, splitFunction, FileNameNumberFormatter.arrayToString)
   }
 }
-
