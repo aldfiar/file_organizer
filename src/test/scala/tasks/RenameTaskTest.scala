@@ -2,12 +2,12 @@ package tasks
 
 import java.nio.file.{Files, Path}
 
-import files.name.converters.VideoNameConverter
+import files.name.converters.FileNameToVideoEntry
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 import workers.tasks.files.RenameTask
 
 class RenameTaskTest extends FunSuite with BeforeAndAfterEach {
-  private val task: RenameTask = new RenameTask(VideoNameConverter)
+  private val task: RenameTask = new RenameTask(FileNameToVideoEntry)
   private var path: Path = _
 
   override def beforeEach() {

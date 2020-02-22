@@ -20,16 +20,11 @@ object Manager extends StrictLogging {
 
   def start(threads: Int, rootPath: Path, command: Enumeration): Unit = {
     val pool = Executors.newFixedThreadPool(threads)
+
     logger.info(s"Receive command: $command")
+
     command match {
-      case OrganizeCommands.Rename => {
-        logger.info("St")
-      }
       case _ => logger.error("This command is not available")
     }
-
-
   }
-
-
 }
