@@ -4,6 +4,7 @@ import files.elements.VideoDescription
 
 object FileNameToVideoDescription extends FileNameToDescription[VideoDescription] {
   private val bracketRegEx = "[\\[({].*?[\\])}]".r
+  private val numberRegEx = """.?\d+.?""".r
   private val symbolsToRemove = Seq("_", "~", "")
   private val removeLeadingOrTrailing = Seq("-", "~", "-")
 
@@ -13,8 +14,8 @@ object FileNameToVideoDescription extends FileNameToDescription[VideoDescription
 
   override def convert(filename: String): VideoDescription = {
     val array = splitFunction(filename)
-    val nameParts = array.filterNot(x => x.matches(""".?\d+.?"""))
-    val numbers = array.filter(x => x.matches(""".?\d+.?""")).map(x=>x.replace("-", "")).map(_.toInt)
+    val nameParts = array.filterNot(x => numberRegEx.pattern.matcher(x).matches())
+    val numbers = array.filter(x => numberRegEx.pattern.matcher(x).matches()).map(x=>x.replace("-", "")).map(_.toInt)
     var name = nameParts.mkString(" ")
     for (symbol <- removeLeadingOrTrailing) {
       name = name.stripPrefix(symbol).stripSuffix(symbol)
