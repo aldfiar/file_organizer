@@ -8,8 +8,8 @@ import workers.WorkerTask
 
 
 class ShowPathTask extends WorkerTask[Path] {
-   def execute(path: Path): Option[Path] = {
-     Option(path)
+  def execute(path: Path): Option[Path] = {
+    Option(path)
   }
 }
 
@@ -30,7 +30,7 @@ class ManagerTest extends FunSuite with BeforeAndAfterEach {
 
   }
 
-  override def beforeEach() {
+  override def beforeEach(): Unit = {
     path = Files.createTempDirectory("root")
     this.fillRoot(path, 5)
   }

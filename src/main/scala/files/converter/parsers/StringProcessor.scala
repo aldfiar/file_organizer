@@ -1,4 +1,4 @@
-package files.name.parse
+package files.converter.parsers
 
 object StringProcessor {
   def process(original: String, transformFunction: String => Array[String], preFunction: Array[String] => Array[String], postFunction: Array[String] => Array[String]): Array[String] = {
@@ -13,4 +13,3 @@ object StringProcessor {
   }
 
 }
-

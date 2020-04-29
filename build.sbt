@@ -2,7 +2,7 @@ name := "file_organizer"
 
 version := "0.1"
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.12.11"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 

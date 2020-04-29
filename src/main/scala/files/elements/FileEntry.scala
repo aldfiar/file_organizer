@@ -6,10 +6,15 @@ object FileTypes extends Enumeration {
 
   case class FileType(i: Int, extensions: Seq[String]) extends super.Val
 
-  val Audio = FileType(nextId, Seq("mp3", "wav", "flac"))
+  val Audio = FileType(nextId, Seq("mp3", "wav", "flac", "alac"))
   val Image = FileType(nextId, Seq("jpg", "png"))
-  val Video = FileType(nextId, Seq("avi", "mpv", "mov"))
+  val Video = FileType(nextId, Seq("avi", "mpv", "mov", "mpeg", "mkv"))
   val Text = FileType(nextId, Seq("txt", "pdf", "rtf"))
+  val Other = FileType(nextId, Seq(""))
+
+  implicit def valueToFileType(v: Value): FileType = {
+    v.asInstanceOf[FileType]
+  }
 }
 
 trait FileEntry {
