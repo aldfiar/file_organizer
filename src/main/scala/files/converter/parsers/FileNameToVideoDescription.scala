@@ -10,14 +10,11 @@ object FileNameToVideoDescription extends FileNameToDescription[VideoDescription
   private val tail = """[-|~|_]$""".r
 
   private[this] def splitFunction(filename: String): Array[String] = {
-    bracketRegEx.replaceAllIn(filename, "").split("[ _]").filter(t => !symbolsToRemove.contains(t))
+    filename.replaceAll(bracketRegEx.regex, "").split("[ _]").filter(t => !symbolsToRemove.contains(t))
   }
   private[this] def nameExtractor(array: Seq[String]):String = {
     val nameParts = array.filterNot(x => numberRegEx.pattern.matcher(x).matches())
-    val name = nameParts.mkString(" ")
-    val trimmedHead = head.replaceAllIn(name, "")
-    val finalName = tail.replaceAllIn(trimmedHead, "").trim
-    finalName
+    nameParts.mkString(" ").replaceAll(head.regex, "").replaceAll(tail.regex, "").trim
   }
 
   private [this] def numberExtractor(array: Seq[String]): Int = {
