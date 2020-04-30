@@ -44,5 +44,13 @@ class FileNameToVideoEntryTest extends FunSuite {
     assertResult(2)(parsed.number)
   }
 
+  test("Parse name with numbers in title") {
+    val fileName = "Galaxy Express 999"
+    val parsed = FileNameToVideoDescription.convert(fileName)
+    assertResult("Galaxy Express 999")(parsed.name)
+    assertResult(0)(parsed.number)
+  }
+
+
 
 }
