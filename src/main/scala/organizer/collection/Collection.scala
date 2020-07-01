@@ -8,6 +8,8 @@ trait Collection[A] extends Affiliation {
 
   def elements(): List[A]
 
+  def filteredElements(filter: A => Boolean): List[A]
+
   def path(): String
 
   override def toString: String = s"Collection - type: $affiliation, path: ${path()}"
@@ -20,7 +22,7 @@ class FileCollection[A <: File](override val affiliation: CollectionType, val ro
       List.empty
     }
     else {
-      root.collectChildren(x => affiliation.extensions.contains(x.extension.getOrElse(""))).toList
+      filteredElements(x => affiliation.extensions.contains(x.extension.getOrElse("")))
     }
   }
 
@@ -29,4 +31,8 @@ class FileCollection[A <: File](override val affiliation: CollectionType, val ro
   }
 
   override def path(): String = root.toString()
+
+  override def filteredElements(filter: File => Boolean): List[File] ={
+    root.collectChildren(filter).toList
+  }
 }

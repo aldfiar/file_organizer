@@ -23,6 +23,8 @@ class StringCollection[A <: String] extends Collection[String] {
   override def path(): String = "/tmp/some"
 
   override def affiliation: CollectionType = BaseAffiliation.getAffiliation
+
+  override def filteredElements(filter: String => Boolean): List[String] = List.fill(10)(Random.nextInt().toString)
 }
 
 class CollectionAdministratorTest extends FunSuite with BeforeAndAfterEach {
@@ -46,13 +48,13 @@ class CollectionAdministratorTest extends FunSuite with BeforeAndAfterEach {
     collection = new StringCollection()
   }
 
-  test("Test collection convertion") {
+  test("Test collection conversion") {
     def task(some: String) = some.toInt
 
     val ca = new CollectionAdministrator()
     ca.manage(List.apply(collection), task = new TestTask(affiliation = BaseAffiliation.getAffiliation, task = task))
-
   }
+
   test("Test file collection conversion") {
     val parent = File("/tmp/some")
     parent match {
