@@ -5,7 +5,7 @@ import org.scalatest.{BeforeAndAfterEach, FunSuite}
 import organizer.collection.{Collection, CollectionType, FileCollection}
 
 import scala.util.Random
-
+import org.scalatest.Matchers._
 class TestTask[A <: String, Z <: Int](val affiliation: CollectionType, val task: Function[A, Z]) extends CollectionTask[A, Z]
 
 object BaseAffiliation {
@@ -34,12 +34,12 @@ class CollectionAdministratorTest extends FunSuite with BeforeAndAfterEach {
     level match {
       case x if x >= 0 =>
         val inner = File.newTemporaryDirectory(s"test_inner_$level", parent = path)
-        inner.createDirectory()
+        inner.createIfNotExists()
 
         val number = Random.nextInt(4)
         for (i <- 1 to number) {
           val f = File.newTemporaryFile(parent = Option.apply(inner), prefix = s"file_$number", suffix = ".jpg")
-          f.createFile()
+          f.createFileIfNotExists()
         }
     }
   }
@@ -56,16 +56,12 @@ class CollectionAdministratorTest extends FunSuite with BeforeAndAfterEach {
   }
 
   test("Test file collection conversion") {
-    val parent = File("/tmp/some")
-    parent match {
-      case x if !x.exists => parent.createDirectory()
-      case z if z.isRegularFile =>
-        z.delete()
-        z.createDirectory()
-    }
+    val parent =  File.newTemporaryDirectory()
+    parent.createDirectoryIfNotExists()
     fillRoot(level = 3, path = Option.apply(parent))
     val fl = new FileCollection(affiliation = BaseAffiliation.getAffiliation, root = parent)
     val l = fl.elements()
+    l.length should not be(0)
   }
 
 }

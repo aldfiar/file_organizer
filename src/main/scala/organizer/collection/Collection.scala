@@ -17,7 +17,7 @@ trait Collection[A] extends Affiliation {
 
 class FileCollection[A <: File](override val affiliation: CollectionType, val root: File) extends Collection[File] with Affiliation with StrictLogging {
   def elements(): List[File] = {
-    if (exists()) {
+    if (!exists()) {
       logger.warn("Root : {} don't exists", root)
       List.empty
     }
